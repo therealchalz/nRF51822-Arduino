@@ -2,13 +2,13 @@
 #ifndef NRF51822_API_H_
 #define NRF51822_API_H_
 
-#include "nRF51DiscoveredCharacteristic.h"
-#include "nRF51Gap.h"
-#include "nRF51GattClient.h"
-#include "nRF51GattServer.h"
-#include "nRF51SecurityManager.h"
-#include "nRF51ServiceDiscovery.h"
-#include "nRF51822n.h"
+#include "nRF5xDiscoveredCharacteristic.h"
+#include "nRF5xGap.h"
+#include "nRF5xGattClient.h"
+#include "nRF5xGattServer.h"
+#include "nRF5xSecurityManager.h"
+#include "nRF5xServiceDiscovery.h"
+#include "nRF5xn.h"
 #include "projectconfig.h"
 
 
@@ -32,7 +32,7 @@
 #include "ble_radio_notification.h"
 #include "ble_dfu.h"
 #include "ble_advdata.h"
-#include "ble_advdata_parser.h"
+//#include "ble_advdata_parser.h"
 #include "ble_conn_params.h"
 #include "ble_date_time.h"
 #include "ble_sensor_location.h"

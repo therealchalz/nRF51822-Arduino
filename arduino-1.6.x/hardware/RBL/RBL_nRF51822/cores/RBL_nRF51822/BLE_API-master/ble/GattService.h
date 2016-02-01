@@ -29,6 +29,7 @@ public:
         UUID_CURRENT_TIME_SERVICE           = 0x1805,
         UUID_CYCLING_SPEED_AND_CADENCE      = 0x1816,
         UUID_DEVICE_INFORMATION_SERVICE     = 0x180A,
+        UUID_ENVIRONMENTAL_SERVICE          = 0x181A,
         UUID_GLUCOSE_SERVICE                = 0x1808,
         UUID_HEALTH_THERMOMETER_SERVICE     = 0x1809,
         UUID_HEART_RATE_SERVICE             = 0x180D,
@@ -45,17 +46,17 @@ public:
 
 public:
     /**
-     *  @brief  Creates a new GattCharacteristic using the specified 16-bit
-     *          UUID, value length, and properties
+     *  @brief  Creates a new GattService using the specified 16-bit
+     *          UUID, value length, and properties.
      *
-     *  @note   The UUID value must be unique in the service and is normally >1
+     *  @note   The UUID value must be unique and is normally >1.
      *
      *  @param[in]  uuid
-     *              The UUID to use for this characteristic
+     *              The UUID to use for this service.
      *  @param[in]  characteristics
-     *              A pointer to an array of characteristics to be included within this service
+     *              A pointer to an array of characteristics to be included within this service.
      *  @param[in]  numCharacteristics
-     *              The number of characteristics
+     *              The number of characteristics.
      */
     GattService(const UUID &uuid, GattCharacteristic *characteristics[], unsigned numCharacteristics) :
         _primaryServiceID(uuid), _characteristicCount(numCharacteristics), _characteristics(characteristics), _handle(0) {

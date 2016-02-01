@@ -40,7 +40,11 @@
 #ifdef USE_APP_TIMER
 #include "app_timer.h"
 #else
-#include "mbed.h"
+    #ifdef YOTTA_CFG_MBED_OS
+        #include "mbed-drivers/mbed.h"
+    #else
+        #include "mbed.h"
+    #endif
 #endif
 
 static ble_conn_params_init_t m_conn_params_config;     /**< Configuration as specified by the application. */
@@ -349,7 +353,8 @@ void ble_conn_params_on_ble_evt(ble_evt_t * p_ble_evt)
     }
 }
 
-uint32_t ble_conn_params_change_conn_params(ble_gap_conn_params_t *new_params)
+
+uint32_t ble_conn_params_change_conn_params(ble_gap_conn_params_t * new_params)
 {
     uint32_t err_code;
 

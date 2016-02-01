@@ -60,10 +60,6 @@
 #include "ble_stack_handler_types.h"
 #include "ant_stack_handler_types.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif // #ifdef __cplusplus
-
 #define SOFTDEVICE_SCHED_EVT_SIZE       0                                                 /**< Size of button events being passed through the scheduler (is to be used for computing the maximum size of scheduler events). For SoftDevice events, this size is 0, since the events are being pulled in the event handler. */
 #define SYS_EVT_MSG_BUF_SIZE            sizeof(uint32_t)                                  /**< Size of System (SOC) event message buffer. */
 
@@ -102,6 +98,14 @@ typedef void (*sys_evt_handler_t) (uint32_t evt_id);
         APP_ERROR_CHECK(ERR_CODE);                                                                 \
     } while (0)
 
+/**
+ * @brief Function for retrieving the information about SD state
+ *
+ * The information about current state of softdevice.
+ * @retval false SD is not initialized and SD commands should not be called.
+ * @retval true  SD is already initialized
+ */
+bool softdevice_handler_isEnabled(void);
 
 /**@brief      Function for initializing the stack handler module.
  *
@@ -167,10 +171,6 @@ void intern_softdevice_events_execute(void);
 
 
 /**@endcond */
-
-#ifdef __cplusplus
-}
-#endif // #ifdef __cplusplus
 
 #endif // SOFTDEVICE_HANDLER_H__
 

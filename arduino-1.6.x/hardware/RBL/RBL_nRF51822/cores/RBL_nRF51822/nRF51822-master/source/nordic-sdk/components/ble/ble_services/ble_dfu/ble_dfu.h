@@ -40,8 +40,8 @@
  * @details  The Device Firmware Update (DFU) service is a GATT based service that can be used for
  *           performing firmware updates over BLE. Note that this implementation uses vendor
  *           specific UUIDs for service and characteristics and is intended to demonstrate the
- *           firmware updates over BLE. Refer @ref ota_spec_sec and @ref
- *            ota_profile_section for more information on the service and profile respectively.
+ *           firmware updates over BLE. Refer @ref bledfu_transport_bleservice and @ref
+ *            bledfu_transport_bleprofile for more information on the service and profile respectively.
  */
 
 #ifndef BLE_DFU_H__
@@ -111,8 +111,8 @@ typedef enum
  */
 typedef struct
 {
-    uint8_t                      len;                                   /**< Length of the packet received. */
     uint8_t *                    p_data;                                /**< Pointer to the received packet. This will point to a word aligned memory location.*/
+    uint8_t                      len;                                   /**< Length of the packet received. */
 } ble_dfu_pkt_write_t;
 
 /**@brief   Packet receipt notification request structure.
