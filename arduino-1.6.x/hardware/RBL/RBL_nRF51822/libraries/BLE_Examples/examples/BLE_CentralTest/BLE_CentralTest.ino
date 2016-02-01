@@ -63,7 +63,7 @@ void scanCallBack(const Gap::AdvertisementCallbackParams_t *params)
         {
             Serial.println("Got device, stop scan ");
             ble.stopScan();
-            ble.connect(params->peerAddr, Gap::ADDR_TYPE_RANDOM_STATIC, NULL, NULL);
+            ble.connect(params->peerAddr, BLEProtocol::AddressType::RANDOM_STATIC, NULL, NULL);
         }
 
     }
@@ -74,11 +74,11 @@ void scanCallBack(const Gap::AdvertisementCallbackParams_t *params)
         Serial.print("Long name is : ");
         Serial.println((const char*)adv_name);
 
-        if( (len == 5) && (memcmp("HRM1", adv_name, len) == 0x00) )
+        if( (len == 11) && (memcmp("Nordic_HRM", adv_name, len) == 0x00))
         {
             Serial.println("Got device, stop scan ");
             ble.stopScan();
-            ble.connect(params->peerAddr, Gap::ADDR_TYPE_RANDOM_STATIC, NULL, NULL);
+            ble.connect(params->peerAddr, BLEProtocol::AddressType::RANDOM_STATIC, NULL, NULL);
         }
     }
     Serial.println(" ");
@@ -106,12 +106,12 @@ void CharacteristicCallBack(const DiscoveredCharacteristic *chars)
     Serial.print("valueHandle             : ");
     Serial.println(chars->getValueHandle(), HEX);
     Serial.print("CCCDHandle             : ");
-    Serial.println(chars->getCCCDHndle(), HEX);
+    Serial.println((chars->getValueHandle())+1, HEX); //XXX: CCCD Handle: hacked
 
     uint16_t value = 0x0001;
-    //ble.gattClient().read(chars->getConnHandle(), chars->getValueHandle(), 0);
-    //ble.gattClient().write(GattClient::GATT_OP_WRITE_CMD,chars->getConnHandle(),chars->getValueHandle(),2,(uint8_t *)&value);
-    ble.gattClient().write(GattClient::GATT_OP_WRITE_REQ, chars->getConnHandle(), chars->getCCCDHndle(),2,(uint8_t *)&value);
+    //ble.gattClient().read(chars->getConnectionHandle(), chars->getValueHandle(), 0);
+    //ble.gattClient().write(GattClient::GATT_OP_WRITE_CMD,chars->getConnectionHandle(),chars->getValueHandle(),2,(uint8_t *)&value);
+    ble.gattClient().write(GattClient::GATT_OP_WRITE_REQ, chars->getConnectionHandle(), chars->getValueHandle()+1,2,(uint8_t *)&value); //XXX: CCCD Handle: hacked
 }
 
 // GAP call back handle
@@ -132,7 +132,7 @@ void connectionCallBack( const Gap::ConnectionCallbackParams_t *params )
     ble.gattClient().launchServiceDiscovery(params->handle, ServiceCallBack, CharacteristicCallBack, service_uuid, chars_uuid1);
 }
 
-void disconnectionCallBack(Gap::Handle_t handle, Gap::DisconnectionReason_t reason)
+void disconnectionCallBack(const Gap::DisconnectionCallbackParams_t* reason)
 {
    Serial.println("Disconnected ");
 }
